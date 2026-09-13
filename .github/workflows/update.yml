@@ -1,13 +1,7 @@
-name: Update profile card
+name: Render profile card
 
 on:
-  schedule:
-    # GitHub Actions' shortest supported interval is five minutes. Offset from
-    # the hour to reduce the chance of schedule delays during busy periods.
-    - cron: "3/5 * * * *"
   workflow_dispatch:
-  repository_dispatch:
-    types: [refresh-profile]
   push:
     paths:
       - "generator/**"
@@ -28,9 +22,6 @@ jobs:
         with:
           node-version: 20
       - name: Generate profile SVGs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_USERNAME: AmanCiphers
         run: node generator/index.js
       - name: Commit updated card when needed
         run: |

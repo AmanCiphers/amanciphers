@@ -1,44 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title description">
-  <title id="title">Aman’s developer profile</title><desc id="description">A terminal-style profile card with GitHub statistics.</desc>
-  <rect width="1200" height="820" rx="18" fill="#ffffff"/><rect x="20" y="20" width="1160" height="780" rx="14" fill="#f6f8fa" stroke="#d0d7de"/>
-  <circle cx="52" cy="50" r="6" fill="#ff7b72"/><circle cx="74" cy="50" r="6" fill="#e3b341"/><circle cx="96" cy="50" r="6" fill="#3fb950"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17" dominant-baseline="middle">
-    <text x="88" y="244" fill="#9a6700" font-size="35" font-weight="700">&lt;/&gt;</text><text x="88" y="294" fill="#1f2328" font-size="23" font-weight="700">A M A N</text>
-    <text x="88" y="334" fill="#57606a" font-size="14">crafting systems,</text><text x="88" y="358" fill="#57606a" font-size="14">one commit at a time.</text><path d="M88 410h270" stroke="#d0d7de" stroke-width="2"/>
-    <text x="88" y="450" fill="#1a7f37" font-size="18">$</text><text x="112" y="450" fill="#1f2328" font-size="14">whoami</text><text x="88" y="482" fill="#57606a" font-size="14">engineering student</text>
-    <text x="88" y="512" fill="#1a7f37" font-size="18">$</text><text x="112" y="512" fill="#1f2328" font-size="14">status</text><text x="88" y="544" fill="#57606a" font-size="14">learning · building · iterating</text><path d="M410 76v680" stroke="#d0d7de" stroke-width="2"/>
-    <text x="470" y="92" fill="#1f2328" font-size="27" font-weight="700">aman@cloverforge</text>
-    <text x="470" y="122" fill="#57606a" font-size="18">────────────────────────────────</text>
-    <text x="470" y="164" fill="#9a6700" font-weight="700">role:</text>
-    <text x="620" y="164" fill="#1f2328" >Engineering student · software developer</text>
-    <text x="470" y="200" fill="#9a6700" font-weight="700">school:</text>
-    <text x="620" y="200" fill="#1f2328" >Shaheed Bhagat Singh State University</text>
-    <text x="470" y="236" fill="#9a6700" font-weight="700">focus:</text>
-    <text x="620" y="236" fill="#1f2328" >Backend · systems · developer tools</text>
-    <text x="470" y="298" fill="#0969da" font-weight="700">── stack</text>
-    <text x="570" y="298" fill="#57606a" >────────────────────────</text>
-    <text x="470" y="338" fill="#9a6700" font-weight="700">direction:</text>
-    <text x="620" y="338" fill="#1f2328" >Building foundations in software engineering</text>
-    <text x="470" y="374" fill="#9a6700" font-weight="700">languages:</text>
-    <text x="620" y="374" fill="#1f2328" >JavaScript · CSS · Python</text>
-    <text x="470" y="450" fill="#0969da" font-weight="700">── projects</text>
-    <text x="600" y="450" fill="#57606a" >─────────────────────</text>
-    <text x="470" y="490" fill="#9a6700" font-weight="700">now:</text>
-    <text x="620" y="490" fill="#1f2328" >Open-source work in progress</text>
-    <text x="470" y="526" fill="#9a6700" font-weight="700">next:</text>
-    <text x="620" y="526" fill="#1f2328" >Projects will appear here as they ship</text>
-    <text x="470" y="590" fill="#0969da" font-weight="700">── github stats</text>
-    <text x="650" y="590" fill="#57606a" >─────────────────</text>
-    <text x="470" y="630" fill="#9a6700" font-weight="700">repos:</text>
-    <text x="620" y="630" fill="#1f2328" >25</text>
-    <text x="470" y="660" fill="#9a6700" font-weight="700">followers:</text>
-    <text x="620" y="660" fill="#1f2328" >3</text>
-    <text x="470" y="690" fill="#9a6700" font-weight="700">following:</text>
-    <text x="620" y="690" fill="#1f2328" >9</text>
-    <text x="470" y="720" fill="#9a6700" font-weight="700">stars:</text>
-    <text x="620" y="720" fill="#1f2328" >1</text>
-    <text x="470" y="770" fill="#1a7f37" font-size="23">●</text>
-    <text x="500" y="770" fill="#1f2328" >Building something interesting…</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000" role="img" aria-labelledby="title description">
+  <title id="title">Aman Ciphers — developer profile</title>
+  <desc id="description">A warm terminal-style developer profile with manually editable system, contact, and GitHub statistics.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f2ed"/><stop offset="1" stop-color="#f7f1e9"/></linearGradient>
+    <pattern id="grain" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".7" fill="#b77c42" opacity=".08"/><circle cx="13" cy="11" r=".5" fill="#b77c42" opacity=".06"/></pattern>
+  </defs>
+  <rect width="1500" height="1000" rx="22" fill="#f7f1e9"/>
+  <rect x="18" y="18" width="1464" height="964" rx="17" fill="url(#paper)" stroke="#d5a373"/>
+  <rect x="18" y="18" width="1464" height="964" rx="17" fill="url(#grain)"/>
+  <circle cx="56" cy="57" r="6" fill="#c76c5f"/><circle cx="78" cy="57" r="6" fill="#b77c42"/><circle cx="100" cy="57" r="6" fill="#728d68"/>
+  <text x="1370" y="62" fill="#ab8b66" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11" font-weight="700" text-anchor="end" letter-spacing="2">PROFILE / 01</text>
+  <path d="M48 92H1452" stroke="#d5a373" stroke-opacity=".75"/>
+  <g dominant-baseline="middle">
+    <text x="70" y="156" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="700" xml:space="preserve">    _    __  __    _    _   _</text>
+    <text x="70" y="184" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="700" xml:space="preserve">   / \  |  \/  |  / \  | \ | |</text>
+    <text x="70" y="212" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="700" xml:space="preserve">  / _ \ | |\/| | / _ \ |  \| |</text>
+    <text x="70" y="240" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="700" xml:space="preserve"> / ___ \| |  | |/ ___ \| |\  |</text>
+    <text x="70" y="268" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="700" xml:space="preserve">/_/   \_\_|  |_/_/   \_\_| \_|</text>
+    <text x="70" y="336" fill="#3c2b20" font-family="ui-serif, Georgia, Cambria, Times New Roman, serif" font-size="39" font-weight="700">Aman Ciphers</text>
+    <path d="M70 368H510" stroke="#d5a373"/>
+    <text x="70" y="408" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="16">// full-stack developer</text>
+    <text x="70" y="438" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="16">// engineering student</text>
+    <text x="70" y="468" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="16">// backend · systems · developer tools</text>
+    <rect x="70" y="523" width="440" height="184" rx="13" fill="#fffaf4" fill-opacity=".7" stroke="#d5a373" stroke-opacity=".75"/>
+    <text x="96" y="558" fill="#ab8b66" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1.8">WORKBENCH</text>
+    <text x="96" y="598" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="15" font-weight="700">focus</text>
+    <text x="190" y="598" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="15">backend systems</text>
+    <text x="96" y="634" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="15" font-weight="700">craft</text>
+    <text x="190" y="634" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="15">web experiences</text>
+    <text x="96" y="670" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="15" font-weight="700">home</text>
+    <text x="190" y="670" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="15">thecloverforge.com</text>
+    <path d="M555 120V934" stroke="#d5a373" stroke-opacity=".75"/>
+    <text x="610" y="118" fill="#3c2b20" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="27" font-weight="700">aman@thecloverforge</text>
+    <path d="M610 140H1470" stroke="#d5a373"/>
+    <text x="610" y="177" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">OS:</text>
+    <path d="M900 177H1200" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="177" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">macOS, Linux, Android</text>
+    <text x="610" y="215" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Uptime:</text>
+    <path d="M900 215H1200" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="215" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">set PROFILE.birthDate</text>
+    <text x="610" y="253" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Host:</text>
+    <path d="M900 253H1236" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="253" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">thecloverforge.com</text>
+    <text x="610" y="291" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Kernel:</text>
+    <path d="M900 291H1284" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="291" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">Lead Developer</text>
+    <text x="610" y="329" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">IDE:</text>
+    <path d="M900 329H1236" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="329" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">VS Code, nano, Vim</text>
+    <text x="610" y="372" fill="#3c2b20" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">─ Languages </text>
+    <path d="M780 372H1470" stroke="#d5a373" stroke-width="2"/>
+    <text x="610" y="406" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Languages.Programming:</text>
+    <path d="M900 406H1236" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="406" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">JavaScript, Python</text>
+    <text x="610" y="438" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Languages.Web:</text>
+    <path d="M900 438H1284" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="438" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">React, Next.js</text>
+    <text x="610" y="470" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Languages.Backend:</text>
+    <path d="M900 470H1248" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="470" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">AWS, GCP, Node.js</text>
+    <text x="610" y="502" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Languages.Human:</text>
+    <path d="M900 502H1020" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="502" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">English, Punjabi, Hindi, Japanese N5</text>
+    <text x="610" y="548" fill="#3c2b20" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">─ Hobbies </text>
+    <path d="M780 548H1470" stroke="#d5a373" stroke-width="2"/>
+    <text x="610" y="582" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Hobbies.Tech:</text>
+    <path d="M900 582H1248" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="582" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">I think, I create</text>
+    <text x="610" y="614" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Hobbies.General:</text>
+    <path d="M900 614H1020" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="614" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">FPV drones, Piano, Learning Japanese</text>
+    <text x="610" y="660" fill="#3c2b20" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">─ Contact </text>
+    <path d="M780 660H1470" stroke="#d5a373" stroke-width="2"/>
+    <text x="610" y="694" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">GitHub:</text>
+    <path d="M900 694H1188" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="694" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">github.com/AmanCiphers</text>
+    <text x="610" y="726" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Portfolio:</text>
+    <path d="M900 726H1176" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="726" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">aman.thecloverforge.com</text>
+    <text x="610" y="758" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">LinkedIn:</text>
+    <path d="M900 758H1128" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="758" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">linkedin.com/in/amanciphers</text>
+    <text x="610" y="790" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Email:</text>
+    <path d="M900 790H1128" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="1470" y="790" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">fullstackdev.aman@gmail.com</text>
+    <text x="610" y="836" fill="#3c2b20" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">─ GitHub Stats </text>
+    <path d="M780 836H1470" stroke="#d5a373" stroke-width="2"/>
+    <text x="610" y="866" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">Repos: 25  |  Contributed: —  |  Stars: 1</text>
+    <text x="610" y="894" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">Commits: —  |  Followers: 3  |  Following: 9</text>
+    <text x="610" y="922" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">Lines of code: ∞</text>
   </g>
 </svg>

@@ -1,94 +1,187 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const https = require("node:https");
 
-const USERNAME = process.env.GITHUB_USERNAME || "AmanCiphers";
-const API_TOKEN = process.env.GITHUB_TOKEN;
 const ROOT = path.resolve(__dirname, "..");
 
-function request(pathname) {
-  return new Promise((resolve, reject) => {
-    https.get({ hostname: "api.github.com", path: pathname, headers: { "User-Agent": "AmanCiphers-profile-readme", Accept: "application/vnd.github+json", ...(API_TOKEN ? { Authorization: `Bearer ${API_TOKEN}` } : {}) } }, (response) => {
-      let body = "";
-      response.on("data", (chunk) => { body += chunk; });
-      response.on("end", () => {
-        if (response.statusCode < 200 || response.statusCode >= 300) return reject(new Error(`GitHub API returned ${response.statusCode}`));
-        try { resolve(JSON.parse(body)); } catch (error) { reject(error); }
-      });
-    }).on("error", reject);
-  });
+// Edit the values in this block, then run: node generator/index.js
+// Use "—" for anything you would rather leave blank on the card.
+const PROFILE = {
+  header: "aman@thecloverforge",
+  // Set this to your date of birth in YYYY-MM-DD format to enable uptime.
+  birthDate: "YYYY-MM-DD",
+  system: {
+    os: "macOS, Linux, Android",
+    host: "thecloverforge.com",
+    kernel: "Lead Developer",
+    ide: "VS Code, nano, Vim",
+  },
+  languages: {
+    programming: "JavaScript, Python",
+    web: "React, Next.js",
+    backend: "AWS, GCP, Node.js",
+    human: "English, Punjabi, Hindi, Japanese N5",
+  },
+  hobbies: {
+    Tech: "I think, I create",
+    General: "FPV drones, Piano, Learning Japanese",
+  },
+  contact: {
+    github: "github.com/AmanCiphers",
+    portfolio: "aman.thecloverforge.com",
+    linkedin: "linkedin.com/in/amanciphers",
+    email: "fullstackdev.aman@gmail.com",
+  },
+  stats: {
+    repos: "25",
+    contributed: "—",
+    stars: "1",
+    commits: "—",
+    followers: "3",
+    following: "9",
+    linesOfCode: "∞",
+  },
+};
+
+function escapeXml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;",
+  }[character]));
 }
 
-async function getStats() {
-  const user = await request(`/users/${encodeURIComponent(USERNAME)}`);
-  const repositoryCount = Number(user.public_repos) || 0;
-  const pages = Math.max(1, Math.ceil(repositoryCount / 100));
-  const repositoryPages = await Promise.all(
-    Array.from({ length: pages }, (_, index) => request(
-      `/users/${encodeURIComponent(USERNAME)}/repos?per_page=100&page=${index + 1}&type=owner&sort=updated`,
-    )),
-  );
-  const repos = repositoryPages.flat();
-  const ownedRepos = repos.filter((repo) => !repo.fork);
-  const languages = [...new Set(ownedRepos.map((repo) => repo.language).filter(Boolean))].slice(0, 4);
-  return {
-    repos: String(repositoryCount),
-    followers: String(user.followers ?? 0),
-    following: String(user.following ?? 0),
-    stars: String(ownedRepos.reduce((total, repo) => total + (repo.stargazers_count || 0), 0)),
-    languages: languages.length ? languages.join(" · ") : "not enough data yet",
-  };
+function limitText(value, maximum) {
+  const text = String(value);
+  return text.length > maximum ? `${text.slice(0, maximum - 1)}…` : text;
 }
 
-function escapeXml(value) { return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[character])); }
-function text(x, y, value, fill, options = "") { return `<text x="${x}" y="${y}" fill="${fill}" ${options}>${escapeXml(value)}</text>`; }
+function calculateAge(birthDate, timeZone = "Asia/Kolkata") {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) return "set PROFILE.birthDate";
 
-function generateSvg(theme, stats) {
+  const birth = new Date(`${birthDate}T00:00:00+05:30`);
+  if (Number.isNaN(birth.getTime())) return "set PROFILE.birthDate";
+
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    hourCycle: "h23",
+  }).formatToParts(new Date()).reduce((result, part) => ({
+    ...result,
+    ...(part.type === "literal" ? {} : { [part.type]: Number(part.value) }),
+  }), {});
+
+  let years = parts.year - Number(birthDate.slice(0, 4));
+  let months = parts.month - Number(birthDate.slice(5, 7));
+  let days = parts.day - Number(birthDate.slice(8, 10));
+  let hours = parts.hour;
+
+  if (days < 0) {
+    months -= 1;
+    const previousMonth = parts.month === 1 ? 12 : parts.month - 1;
+    const previousYear = previousMonth === 12 ? parts.year - 1 : parts.year;
+    days += new Date(Date.UTC(previousYear, previousMonth, 0)).getUTCDate();
+  }
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+  if (years < 0) return "set a past birth date";
+  return `${years} years, ${months} months, ${days} days, ${hours} hours`;
+}
+
+function text(x, y, value, fill, options = "") {
+  return `<text x="${x}" y="${y}" fill="${fill}" ${options}>${escapeXml(value)}</text>`;
+}
+
+function generateSvg(theme) {
   const dark = theme === "dark";
-  const c = dark ? { bg: "#0d1117", panel: "#161b22", border: "#30363d", text: "#c9d1d9", muted: "#8b949e", accent: "#e3b341", green: "#3fb950", blue: "#79c0ff" } : { bg: "#ffffff", panel: "#f6f8fa", border: "#d0d7de", text: "#1f2328", muted: "#57606a", accent: "#9a6700", green: "#1a7f37", blue: "#0969da" };
+  const c = dark
+    ? { bg: "#0f0d0a", surface: "#1a1410", raised: "#211a14", text: "#e8dfd5", muted: "#c9b7a0", faint: "#8b7b6d", accent: "#d5a373", line: "#4a3f2f" }
+    : { bg: "#f7f1e9", surface: "#f5f2ed", raised: "#fffaf4", text: "#3c2b20", muted: "#705d4b", faint: "#ab8b66", accent: "#b77c42", line: "#d5a373" };
   const mono = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
-  const lines = [];
-  const add = (x, y, value, fill, options = "") => lines.push(text(x, y, value, fill, options));
-  const row = (y, label, value) => { add(470, y, `${label}:`, c.accent, 'font-weight="700"'); add(620, y, value, c.text); };
-  add(470, 92, "aman@cloverforge", c.text, 'font-size="27" font-weight="700"');
-  add(470, 122, "────────────────────────────────", c.muted, 'font-size="18"');
-  row(164, "role", "Engineering student · software developer");
-  row(200, "school", "Shaheed Bhagat Singh State University");
-  row(236, "focus", "Backend · systems · developer tools");
-  add(470, 298, "── stack", c.blue, 'font-weight="700"'); add(570, 298, "────────────────────────", c.muted);
-  row(338, "direction", "Building foundations in software engineering"); row(374, "languages", stats.languages);
-  add(470, 450, "── projects", c.blue, 'font-weight="700"'); add(600, 450, "─────────────────────", c.muted);
-  row(490, "now", "Open-source work in progress"); row(526, "next", "Projects will appear here as they ship");
-  add(470, 590, "── github stats", c.blue, 'font-weight="700"'); add(650, 590, "─────────────────", c.muted);
-  [["repos", stats.repos], ["followers", stats.followers], ["following", stats.following], ["stars", stats.stars]].forEach(([label, value], index) => row(630 + index * 30, label, value));
-  add(470, 770, "●", c.green, 'font-size="23"'); add(500, 770, "Building something interesting…", c.text);
+  const serif = "ui-serif, Georgia, Cambria, Times New Roman, serif";
+  const rightX = 610;
+  const valueX = 1470;
+  const leaderStart = 900;
+  const banner = [
+    "    _    __  __    _    _   _",
+    "   / \\  |  \\/  |  / \\  | \\ | |",
+    "  / _ \\ | |\\/| | / _ \\ |  \\| |",
+    " / ___ \\| |  | |/ ___ \\| |\\  |",
+    "/_/   \\_\\_|  |_/_/   \\_\\_| \\_|",
+  ].map((line, index) => text(70, 156 + index * 28, line, c.accent, `font-family="${mono}" font-size="17" font-weight="700" xml:space="preserve"`)).join("\n    ");
+  const row = (y, label, value) => {
+    const displayValue = limitText(value, 47);
+    // At 20px, a monospace glyph is approximately 12px wide. The small gap
+    // ensures the dotted leader ends just before the right-aligned value.
+    const leaderEnd = Math.max(leaderStart, valueX - displayValue.length * 12 - 18);
+    return `${text(rightX, y, `${label}:`, c.accent, `font-family="${mono}" font-size="20" font-weight="700"`)}
+    <path d="M${leaderStart} ${y}H${leaderEnd}" stroke="${c.faint}" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="${valueX}" y="${y}" fill="${c.muted}" font-family="${mono}" font-size="20" text-anchor="end">${escapeXml(displayValue)}</text>`;
+  };
+  const section = (y, label) => `<text x="${rightX}" y="${y}" fill="${c.text}" font-family="${mono}" font-size="19">─ ${escapeXml(label)} </text>
+    <path d="M${rightX + 170} ${y}H1470" stroke="${c.line}" stroke-width="2"/>`;
+  const statLine = (y, parts) => text(rightX, y, parts.map(([label, value]) => `${label}: ${value}`).join("  |  "), c.muted, `font-family="${mono}" font-size="19"`);
+
   return `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title description">
-  <title id="title">Aman’s developer profile</title><desc id="description">A terminal-style profile card with GitHub statistics.</desc>
-  <rect width="1200" height="820" rx="18" fill="${c.bg}"/><rect x="20" y="20" width="1160" height="780" rx="14" fill="${c.panel}" stroke="${c.border}"/>
-  <circle cx="52" cy="50" r="6" fill="#ff7b72"/><circle cx="74" cy="50" r="6" fill="#e3b341"/><circle cx="96" cy="50" r="6" fill="#3fb950"/>
-  <g font-family="${mono}" font-size="17" dominant-baseline="middle">
-    <text x="88" y="244" fill="${c.accent}" font-size="35" font-weight="700">&lt;/&gt;</text><text x="88" y="294" fill="${c.text}" font-size="23" font-weight="700">A M A N</text>
-    <text x="88" y="334" fill="${c.muted}" font-size="14">crafting systems,</text><text x="88" y="358" fill="${c.muted}" font-size="14">one commit at a time.</text><path d="M88 410h270" stroke="${c.border}" stroke-width="2"/>
-    <text x="88" y="450" fill="${c.green}" font-size="18">$</text><text x="112" y="450" fill="${c.text}" font-size="14">whoami</text><text x="88" y="482" fill="${c.muted}" font-size="14">engineering student</text>
-    <text x="88" y="512" fill="${c.green}" font-size="18">$</text><text x="112" y="512" fill="${c.text}" font-size="14">status</text><text x="88" y="544" fill="${c.muted}" font-size="14">learning · building · iterating</text><path d="M410 76v680" stroke="${c.border}" stroke-width="2"/>
-    ${lines.join("\n    ")}
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000" role="img" aria-labelledby="title description">
+  <title id="title">Aman Ciphers — developer profile</title>
+  <desc id="description">A warm terminal-style developer profile with manually editable system, contact, and GitHub statistics.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c.surface}"/><stop offset="1" stop-color="${c.bg}"/></linearGradient>
+    <pattern id="grain" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".7" fill="${c.accent}" opacity=".08"/><circle cx="13" cy="11" r=".5" fill="${c.accent}" opacity=".06"/></pattern>
+  </defs>
+  <rect width="1500" height="1000" rx="22" fill="${c.bg}"/>
+  <rect x="18" y="18" width="1464" height="964" rx="17" fill="url(#paper)" stroke="${c.line}"/>
+  <rect x="18" y="18" width="1464" height="964" rx="17" fill="url(#grain)"/>
+  <circle cx="56" cy="57" r="6" fill="#c76c5f"/><circle cx="78" cy="57" r="6" fill="${c.accent}"/><circle cx="100" cy="57" r="6" fill="#728d68"/>
+  <text x="1370" y="62" fill="${c.faint}" font-family="${mono}" font-size="11" font-weight="700" text-anchor="end" letter-spacing="2">PROFILE / 01</text>
+  <path d="M48 92H1452" stroke="${c.line}" stroke-opacity=".75"/>
+  <g dominant-baseline="middle">
+    ${banner}
+    <text x="70" y="336" fill="${c.text}" font-family="${serif}" font-size="39" font-weight="700">Aman Ciphers</text>
+    <path d="M70 368H510" stroke="${c.line}"/>
+    <text x="70" y="408" fill="${c.muted}" font-family="${mono}" font-size="16">// full-stack developer</text>
+    <text x="70" y="438" fill="${c.muted}" font-family="${mono}" font-size="16">// engineering student</text>
+    <text x="70" y="468" fill="${c.muted}" font-family="${mono}" font-size="16">// backend · systems · developer tools</text>
+    <rect x="70" y="523" width="440" height="184" rx="13" fill="${c.raised}" fill-opacity=".7" stroke="${c.line}" stroke-opacity=".75"/>
+    <text x="96" y="558" fill="${c.faint}" font-family="${mono}" font-size="11" font-weight="700" letter-spacing="1.8">WORKBENCH</text>
+    <text x="96" y="598" fill="${c.accent}" font-family="${mono}" font-size="15" font-weight="700">focus</text>
+    <text x="190" y="598" fill="${c.muted}" font-family="${mono}" font-size="15">backend systems</text>
+    <text x="96" y="634" fill="${c.accent}" font-family="${mono}" font-size="15" font-weight="700">craft</text>
+    <text x="190" y="634" fill="${c.muted}" font-family="${mono}" font-size="15">web experiences</text>
+    <text x="96" y="670" fill="${c.accent}" font-family="${mono}" font-size="15" font-weight="700">home</text>
+    <text x="190" y="670" fill="${c.muted}" font-family="${mono}" font-size="15">thecloverforge.com</text>
+    <path d="M555 120V934" stroke="${c.line}" stroke-opacity=".75"/>
+    ${text(rightX, 118, PROFILE.header, c.text, `font-family="${mono}" font-size="27" font-weight="700"`)}
+    <path d="M610 140H1470" stroke="${c.line}"/>
+    ${row(177, "OS", PROFILE.system.os)}
+    ${row(215, "Uptime", calculateAge(PROFILE.birthDate))}
+    ${row(253, "Host", PROFILE.system.host)}
+    ${row(291, "Kernel", PROFILE.system.kernel)}
+    ${row(329, "IDE", PROFILE.system.ide)}
+    ${section(372, "Languages")}
+    ${row(406, "Languages.Programming", PROFILE.languages.programming)}
+    ${row(438, "Languages.Web", PROFILE.languages.web)}
+    ${row(470, "Languages.Backend", PROFILE.languages.backend)}
+    ${row(502, "Languages.Human", PROFILE.languages.human)}
+    ${section(548, "Hobbies")}
+    ${row(582, "Hobbies.Tech", PROFILE.hobbies.Tech)}
+    ${row(614, "Hobbies.General", PROFILE.hobbies.General)}
+    ${section(660, "Contact")}
+    ${row(694, "GitHub", PROFILE.contact.github)}
+    ${row(726, "Portfolio", PROFILE.contact.portfolio)}
+    ${row(758, "LinkedIn", PROFILE.contact.linkedin)}
+    ${row(790, "Email", PROFILE.contact.email)}
+    ${section(836, "GitHub Stats")}
+    ${statLine(866, [["Repos", PROFILE.stats.repos], ["Contributed", PROFILE.stats.contributed], ["Stars", PROFILE.stats.stars]])}
+    ${statLine(894, [["Commits", PROFILE.stats.commits], ["Followers", PROFILE.stats.followers], ["Following", PROFILE.stats.following]])}
+    ${statLine(922, [["Lines of code", PROFILE.stats.linesOfCode]])}
   </g>
 </svg>\n`;
 }
 
-async function main() {
-  let stats;
-  try {
-    stats = await getStats();
-  } catch (error) {
-    // Keep the last known-good card if GitHub's API is briefly unavailable.
-    // This avoids committing placeholders over real statistics.
-    console.warn(`Could not refresh GitHub data; retaining existing SVGs: ${error.message}`);
-    return;
-  }
-  fs.writeFileSync(path.join(ROOT, "light_mode.svg"), generateSvg("light", stats));
-  fs.writeFileSync(path.join(ROOT, "dark_mode.svg"), generateSvg("dark", stats));
-  console.log("Profile SVGs generated.");
-}
-main().catch((error) => { console.error(error); process.exitCode = 1; });
+fs.writeFileSync(path.join(ROOT, "light_mode.svg"), generateSvg("light"));
+fs.writeFileSync(path.join(ROOT, "dark_mode.svg"), generateSvg("dark"));
+console.log("Profile SVGs generated.");
