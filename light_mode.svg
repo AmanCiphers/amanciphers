@@ -21,7 +21,7 @@
     <text x="470" y="338" fill="#9a6700" font-weight="700">direction:</text>
     <text x="620" y="338" fill="#1f2328" >Building foundations in software engineering</text>
     <text x="470" y="374" fill="#9a6700" font-weight="700">languages:</text>
-    <text x="620" y="374" fill="#1f2328" >updating…</text>
+    <text x="620" y="374" fill="#1f2328" >JavaScript · CSS · Python</text>
     <text x="470" y="450" fill="#0969da" font-weight="700">── projects</text>
     <text x="600" y="450" fill="#57606a" >─────────────────────</text>
     <text x="470" y="490" fill="#9a6700" font-weight="700">now:</text>
@@ -31,13 +31,13 @@
     <text x="470" y="590" fill="#0969da" font-weight="700">── github stats</text>
     <text x="650" y="590" fill="#57606a" >─────────────────</text>
     <text x="470" y="630" fill="#9a6700" font-weight="700">repos:</text>
-    <text x="620" y="630" fill="#1f2328" >—</text>
+    <text x="620" y="630" fill="#1f2328" >25</text>
     <text x="470" y="660" fill="#9a6700" font-weight="700">followers:</text>
-    <text x="620" y="660" fill="#1f2328" >—</text>
+    <text x="620" y="660" fill="#1f2328" >3</text>
     <text x="470" y="690" fill="#9a6700" font-weight="700">following:</text>
-    <text x="620" y="690" fill="#1f2328" >—</text>
+    <text x="620" y="690" fill="#1f2328" >9</text>
     <text x="470" y="720" fill="#9a6700" font-weight="700">stars:</text>
-    <text x="620" y="720" fill="#1f2328" >—</text>
+    <text x="620" y="720" fill="#1f2328" >1</text>
     <text x="470" y="770" fill="#1a7f37" font-size="23">●</text>
     <text x="500" y="770" fill="#1f2328" >Building something interesting…</text>
   </g>
