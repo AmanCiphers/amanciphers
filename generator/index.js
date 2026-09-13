@@ -8,7 +8,7 @@ const ROOT = path.resolve(__dirname, "..");
 const PROFILE = {
   header: "aman@thecloverforge",
   // Set this to your date of birth in YYYY-MM-DD format to enable uptime.
-  birthDate: "YYYY-MM-DD",
+  birthDate: "2006-07-01",
   system: {
     os: "macOS, Linux, Android",
     host: "thecloverforge.com",
@@ -35,17 +35,23 @@ const PROFILE = {
     repos: "25",
     contributed: "—",
     stars: "1",
-    commits: "—",
     followers: "3",
-    following: "9",
     linesOfCode: "∞",
   },
 };
 
 function escapeXml(value) {
-  return String(value).replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;",
-  }[character]));
+  return String(value).replace(
+    /[&<>"']/g,
+    (character) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&apos;",
+      })[character],
+  );
 }
 
 function limitText(value, maximum) {
@@ -66,10 +72,15 @@ function calculateAge(birthDate, timeZone = "Asia/Kolkata") {
     day: "numeric",
     hour: "numeric",
     hourCycle: "h23",
-  }).formatToParts(new Date()).reduce((result, part) => ({
-    ...result,
-    ...(part.type === "literal" ? {} : { [part.type]: Number(part.value) }),
-  }), {});
+  })
+    .formatToParts(new Date())
+    .reduce(
+      (result, part) => ({
+        ...result,
+        ...(part.type === "literal" ? {} : { [part.type]: Number(part.value) }),
+      }),
+      {},
+    );
 
   let years = parts.year - Number(birthDate.slice(0, 4));
   let months = parts.month - Number(birthDate.slice(5, 7));
@@ -97,9 +108,28 @@ function text(x, y, value, fill, options = "") {
 function generateSvg(theme) {
   const dark = theme === "dark";
   const c = dark
-    ? { bg: "#0f0d0a", surface: "#1a1410", raised: "#211a14", text: "#e8dfd5", muted: "#c9b7a0", faint: "#8b7b6d", accent: "#d5a373", line: "#4a3f2f" }
-    : { bg: "#f7f1e9", surface: "#f5f2ed", raised: "#fffaf4", text: "#3c2b20", muted: "#705d4b", faint: "#ab8b66", accent: "#b77c42", line: "#d5a373" };
-  const mono = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+    ? {
+        bg: "#0f0d0a",
+        surface: "#1a1410",
+        raised: "#211a14",
+        text: "#e8dfd5",
+        muted: "#c9b7a0",
+        faint: "#8b7b6d",
+        accent: "#d5a373",
+        line: "#4a3f2f",
+      }
+    : {
+        bg: "#f7f1e9",
+        surface: "#f5f2ed",
+        raised: "#fffaf4",
+        text: "#3c2b20",
+        muted: "#705d4b",
+        faint: "#ab8b66",
+        accent: "#b77c42",
+        line: "#d5a373",
+      };
+  const mono =
+    "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
   const serif = "ui-serif, Georgia, Cambria, Times New Roman, serif";
   const rightX = 610;
   const valueX = 1470;
@@ -110,19 +140,41 @@ function generateSvg(theme) {
     "  / _ \\ | |\\/| | / _ \\ |  \\| |",
     " / ___ \\| |  | |/ ___ \\| |\\  |",
     "/_/   \\_\\_|  |_/_/   \\_\\_| \\_|",
-  ].map((line, index) => text(70, 156 + index * 28, line, c.accent, `font-family="${mono}" font-size="17" font-weight="700" xml:space="preserve"`)).join("\n    ");
+  ]
+    .map((line, index) =>
+      text(
+        70,
+        156 + index * 28,
+        line,
+        c.accent,
+        `font-family="${mono}" font-size="17" font-weight="700" xml:space="preserve"`,
+      ),
+    )
+    .join("\n    ");
   const row = (y, label, value) => {
     const displayValue = limitText(value, 47);
     // At 20px, a monospace glyph is approximately 12px wide. The small gap
     // ensures the dotted leader ends just before the right-aligned value.
-    const leaderEnd = Math.max(leaderStart, valueX - displayValue.length * 12 - 18);
+    const leaderEnd = Math.max(
+      leaderStart,
+      valueX - displayValue.length * 12 - 18,
+    );
     return `${text(rightX, y, `${label}:`, c.accent, `font-family="${mono}" font-size="20" font-weight="700"`)}
     <path d="M${leaderStart} ${y}H${leaderEnd}" stroke="${c.faint}" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
     <text x="${valueX}" y="${y}" fill="${c.muted}" font-family="${mono}" font-size="20" text-anchor="end">${escapeXml(displayValue)}</text>`;
   };
-  const section = (y, label) => `<text x="${rightX}" y="${y}" fill="${c.text}" font-family="${mono}" font-size="19">─ ${escapeXml(label)} </text>
+  const statGridRow = (x, y, label, value, valueX) => {
+    const displayValue = limitText(value, 18);
+    const leaderEnd = Math.max(x + 170, valueX - displayValue.length * 12 - 4);
+    return `${text(x, y, `${label}:`, c.accent, `font-family="${mono}" font-size="20" font-weight="700"`)}
+    <path d="M${x + 150} ${y}H${leaderEnd}" stroke="${c.faint}" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+    <text x="${valueX}" y="${y}" fill="${c.muted}" font-family="${mono}" font-size="20" text-anchor="end">${escapeXml(displayValue)}</text>`;
+  };
+  const section = (
+    y,
+    label,
+  ) => `<text x="${rightX}" y="${y}" fill="${c.text}" font-family="${mono}" font-size="19">─ ${escapeXml(label)} </text>
     <path d="M${rightX + 170} ${y}H1470" stroke="${c.line}" stroke-width="2"/>`;
-  const statLine = (y, parts) => text(rightX, y, parts.map(([label, value]) => `${label}: ${value}`).join("  |  "), c.muted, `font-family="${mono}" font-size="19"`);
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000" role="img" aria-labelledby="title description">
@@ -169,15 +221,16 @@ function generateSvg(theme) {
     ${section(548, "Hobbies")}
     ${row(582, "Hobbies.Tech", PROFILE.hobbies.Tech)}
     ${row(614, "Hobbies.General", PROFILE.hobbies.General)}
-    ${section(660, "Contact")}
-    ${row(694, "GitHub", PROFILE.contact.github)}
-    ${row(726, "Portfolio", PROFILE.contact.portfolio)}
-    ${row(758, "LinkedIn", PROFILE.contact.linkedin)}
-    ${row(790, "Email", PROFILE.contact.email)}
-    ${section(836, "GitHub Stats")}
-    ${statLine(866, [["Repos", PROFILE.stats.repos], ["Contributed", PROFILE.stats.contributed], ["Stars", PROFILE.stats.stars]])}
-    ${statLine(894, [["Commits", PROFILE.stats.commits], ["Followers", PROFILE.stats.followers], ["Following", PROFILE.stats.following]])}
-    ${statLine(922, [["Lines of code", PROFILE.stats.linesOfCode]])}
+    ${section(648, "Contact")}
+    ${row(682, "GitHub", PROFILE.contact.github)}
+    ${row(714, "Portfolio", PROFILE.contact.portfolio)}
+    ${row(746, "LinkedIn", PROFILE.contact.linkedin)}
+    ${row(778, "Email", PROFILE.contact.email)}
+    ${section(816, "GitHub Stats")}
+    ${statGridRow(rightX, 852, "Repos", PROFILE.stats.repos, rightX + 400)}
+    ${statGridRow(rightX + 430, 852, "Stars", PROFILE.stats.stars, rightX + 820)}
+    ${statGridRow(rightX, 890, "Followers", PROFILE.stats.followers, rightX + 400)}
+    ${statGridRow(rightX + 430, 890, "Lines of Code", PROFILE.stats.linesOfCode, rightX + 820)}
   </g>
 </svg>\n`;
 }
