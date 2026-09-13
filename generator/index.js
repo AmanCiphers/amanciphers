@@ -20,16 +20,24 @@ function request(pathname) {
 }
 
 async function getStats() {
-  const fallback = { repos: "—", followers: "—", following: "—", stars: "—", languages: "updating…" };
-  try {
-    const user = await request(`/users/${encodeURIComponent(USERNAME)}`);
-    const repos = await request(`/users/${encodeURIComponent(USERNAME)}/repos?per_page=100&type=owner&sort=updated`);
-    const languages = [...new Set(repos.map((repo) => repo.language).filter(Boolean))].slice(0, 4);
-    return { repos: String(user.public_repos ?? repos.length), followers: String(user.followers ?? 0), following: String(user.following ?? 0), stars: String(repos.reduce((total, repo) => total + (repo.stargazers_count || 0), 0)), languages: languages.length ? languages.join(" · ") : "not enough data yet" };
-  } catch (error) {
-    console.warn(`Could not refresh GitHub data: ${error.message}`);
-    return fallback;
-  }
+  const user = await request(`/users/${encodeURIComponent(USERNAME)}`);
+  const repositoryCount = Number(user.public_repos) || 0;
+  const pages = Math.max(1, Math.ceil(repositoryCount / 100));
+  const repositoryPages = await Promise.all(
+    Array.from({ length: pages }, (_, index) => request(
+      `/users/${encodeURIComponent(USERNAME)}/repos?per_page=100&page=${index + 1}&type=owner&sort=updated`,
+    )),
+  );
+  const repos = repositoryPages.flat();
+  const ownedRepos = repos.filter((repo) => !repo.fork);
+  const languages = [...new Set(ownedRepos.map((repo) => repo.language).filter(Boolean))].slice(0, 4);
+  return {
+    repos: String(repositoryCount),
+    followers: String(user.followers ?? 0),
+    following: String(user.following ?? 0),
+    stars: String(ownedRepos.reduce((total, repo) => total + (repo.stargazers_count || 0), 0)),
+    languages: languages.length ? languages.join(" · ") : "not enough data yet",
+  };
 }
 
 function escapeXml(value) { return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[character])); }
@@ -70,7 +78,15 @@ function generateSvg(theme, stats) {
 }
 
 async function main() {
-  const stats = await getStats();
+  let stats;
+  try {
+    stats = await getStats();
+  } catch (error) {
+    // Keep the last known-good card if GitHub's API is briefly unavailable.
+    // This avoids committing placeholders over real statistics.
+    console.warn(`Could not refresh GitHub data; retaining existing SVGs: ${error.message}`);
+    return;
+  }
   fs.writeFileSync(path.join(ROOT, "light_mode.svg"), generateSvg("light", stats));
   fs.writeFileSync(path.join(ROOT, "dark_mode.svg"), generateSvg("dark", stats));
   console.log("Profile SVGs generated.");
