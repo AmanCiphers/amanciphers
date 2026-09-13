@@ -2,8 +2,12 @@ name: Update profile card
 
 on:
   schedule:
-    - cron: "17 3 * * *"
+    # GitHub Actions' shortest supported interval is five minutes. Offset from
+    # the hour to reduce the chance of schedule delays during busy periods.
+    - cron: "3/5 * * * *"
   workflow_dispatch:
+  repository_dispatch:
+    types: [refresh-profile]
   push:
     paths:
       - "generator/**"
@@ -15,6 +19,9 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    concurrency:
+      group: profile-card-update
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
