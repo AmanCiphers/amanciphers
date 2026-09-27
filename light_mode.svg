@@ -39,7 +39,7 @@
     <text x="1470" y="177" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">macOS, Linux, Android</text>
     <text x="610" y="215" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Uptime:</text>
     <path d="M900 215H1008" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
-    <text x="1470" y="215" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">20 years, 2 months, 12 days, 18 hours</text>
+    <text x="1470" y="215" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">20 years, 2 months, 26 days, 21 hours</text>
     <text x="610" y="253" fill="#b77c42" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" font-weight="700">Host:</text>
     <path d="M900 253H1236" stroke="#ab8b66" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
     <text x="1470" y="253" fill="#705d4b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20" text-anchor="end">thecloverforge.com</text>
